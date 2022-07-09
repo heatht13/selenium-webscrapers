@@ -10,25 +10,6 @@ import time
 import sys
 import signal
 
-
-def main():
-   """Driver function to conduct data wrangling"""
-   print("This tool categorizes PC99 units into their respective trailers and displays this data as a bar chart. If no trailer is found, this program will categorize the container according to the respective error it encountered when trying to find the trailer (Ex: destNotOak4.csv stores all containers which destination FC did not oatch OAK4). All data passed in will be saved for future reference.")
-   print()
-   print(r"Please provide the path to the PC99 csv file you would like to process. **This file must contain no more than 7 days worth of data. To avoid long wait times of over a day, it is recommended to pass no more than one day's worth of data. Due to this program's conversion of user input files, number of containers scraped in program will be signifcantly larger than that of the original file, roughly 1.5X. Take note that 100 containers takes 5 minutes on average to process. If you would like to exit the program ans save what's completed, please press CTRL+C. This must be done during while the program is web scraping.** Example input format: C:\Users\thomhat\Documents\PC99May21.csv")
-   filePath = input("Enter path here: ")
-   print()
-
-   prescrape = preprocess(filePath) #optimize csv for web scraping, returns dataframe
-   postscrape = scrape(prescrape) #scrapes site, returns tuple of 5 data metrics
-   complete = postprocess(postscrape) #sends scrape data to csv files and plots
-
-   if(complete == 1):
-      print("Complete")
-   else:
-      print("Error in completion")
-
-
 def preprocess(filePath):
    """takes path to csv file and returns a dataframe optimized for web scraping"""
    print(f"Preprocessing input file at location {filePath}...")
@@ -180,4 +161,19 @@ def second(element):
    return element[1]
 
 
-main() 
+if __name__ == '__main__':
+   """Driver function to conduct data wrangling"""
+   print("This tool categorizes PC99 units into their respective trailers and displays this data as a bar chart. If no trailer is found, this program will categorize the container according to the respective error it encountered when trying to find the trailer (Ex: destNotOak4.csv stores all containers which destination FC did not oatch OAK4). All data passed in will be saved for future reference.")
+   print()
+   print(r"Please provide the path to the PC99 csv file you would like to process. **This file must contain no more than 7 days worth of data. To avoid long wait times of over a day, it is recommended to pass no more than one day's worth of data. Due to this program's conversion of user input files, number of containers scraped in program will be signifcantly larger than that of the original file, roughly 1.5X. Take note that 100 containers takes 5 minutes on average to process. If you would like to exit the program ans save what's completed, please press CTRL+C. This must be done during while the program is web scraping.** Example input format: C:\Users\thomhat\Documents\PC99May21.csv")
+   filePath = input("Enter path here: ")
+   print()
+
+   prescrape = preprocess(filePath) #optimize csv for web scraping, returns dataframe
+   postscrape = scrape(prescrape) #scrapes site, returns tuple of 5 data metrics
+   complete = postprocess(postscrape) #sends scrape data to csv files and plots
+
+   if(complete == 1):
+      print("Complete")
+   else:
+      print("Error in completion")
